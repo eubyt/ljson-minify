@@ -1,0 +1,4 @@
+*.fasl
+*.core
+bin/ljson-bin
+.DS_Store

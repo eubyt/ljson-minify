@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ ! -f "${PROJECT_DIR}/ljson.asd" ]; then
+  PROJECT_DIR="$(cd "${PROJECT_DIR}/.." && pwd)"
+fi
+cd "${PROJECT_DIR}"
+
+exec sbcl --noinform --non-interactive \
+  --eval '(require :asdf)' \
+  --eval '(asdf:load-asd (truename "ljson.asd"))' \
+  --eval '(asdf:load-system :ljson/tests)' \
+  --eval '(ljson/tests/run:test-runner-main)'
